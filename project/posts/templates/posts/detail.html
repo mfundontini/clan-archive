@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <h1>
+            DETAIL
+            </h1>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            Here is the blog you clicked:</br>
+            {% if post.image %}
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <img src="{{ post.image.url }}" class="img-responsive">
+                </div>
+            </div>
+            {% endif %}
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.body }}</p>
+            <p>{{ post.author }}</p>
+            <a href="{% url 'posts:update' post.id %}">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'posts:delete' post.id %}">Delete</a>
+        </div>
+    </div>
+
+{% endblock %}

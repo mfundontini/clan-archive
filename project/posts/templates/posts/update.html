@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <h1>
+                UPDATE
+            </h1>
+            <form method="POST" action="">
+                {% csrf_token %}
+                    {% for field in form %}
+                        <span>{{field.errors}}</span>
+                        <label>{{field.label_tag}}</label>
+                        <div>{{ field }}</div>
+                        <br>
+                    {% endfor %}
+                <input type="submit" value="Update Post"/>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
