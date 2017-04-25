@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import posts.models
+import project.posts.models
 
 
 class Migration(migrations.Migration):
@@ -26,6 +26,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='post',
             name='image',
-            field=models.ImageField(blank=True, height_field='height', null=True, upload_to=posts.models.upload_to, width_field='width'),
+            field=models.ImageField(blank=True, height_field='height', null=True, upload_to=project.posts.models.upload_to, width_field='width'),
         ),
     ]
