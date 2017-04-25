@@ -12,7 +12,8 @@ from .forms import PostCreateForm
 def home(request):
     queryset_list = Post.objects.all()
     paginator = Paginator(queryset_list, 10)  # Show 10 posts per page
-    page = request.GET.get('page')
+    page_index = "page"
+    page = request.GET.get(page_index)
     try:
         queryset = paginator.page(page)
     except PageNotAnInteger:
@@ -22,7 +23,8 @@ def home(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         queryset = paginator.page(paginator.num_pages)
     context = {
-        "posts": queryset
+        "posts": queryset,
+        "page": page_index
     }
     return render(request, "home.html", context)
 
