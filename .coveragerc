@@ -1,0 +1,12 @@
+[run]
+branch = True
+source =
+    project
+omit = 
+    */migrations/*
+    */management/*
+    project/blog19/settings*
+
+[report]
+show_missing = True
+

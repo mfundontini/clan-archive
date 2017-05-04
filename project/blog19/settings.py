@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # my apps
+    # apps
     'project.posts',
+    # third party apps
+    'formfactory',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -127,7 +129,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "upload_to", "static")
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "upload_from", "static"),
+    os.path.join(os.path.dirname(BASE_DIR), "upload_from", "static"),
 ]
 
 MEDIA_URL = '/media/'
