@@ -48,4 +48,5 @@ phantomcss/images/results
 mothership/dealuploader/coverage/
 .tox/
 /dj19
+*.sqlite3
 
