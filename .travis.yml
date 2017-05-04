@@ -1,0 +1,15 @@
+sudo: false
+language: python
+cache: pip
+
+env:
+     - TOXENV=django16
+
+install:
+  - pip install tox
+  - pip install -r requirements.txt
+
+script: tox
+
+git:
+  depth: 1
