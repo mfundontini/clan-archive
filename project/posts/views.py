@@ -1,5 +1,6 @@
+from urllib import quote_plus
+
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -53,8 +54,12 @@ def create(request):
 
 def detail(request, pk):
     instance = get_object_or_404(Post, pk=pk)
+    content = instance.title
+    content = quote_plus(content)
+
     context = {
-        "post": instance
+        "post": instance,
+        "url_string": content
     }
     return render(request, "detail.html", context)
 
