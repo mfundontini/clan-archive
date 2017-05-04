@@ -61,7 +61,7 @@ def detail(request, pk):
 
 def update(request, pk):
     instance = get_object_or_404(Post, pk=pk)
-    form = PostCreateForm(request.FILES, instance=instance)
+    form = PostCreateForm(instance=instance)
     context = {
         "form": form
     }

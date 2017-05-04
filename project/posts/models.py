@@ -9,8 +9,12 @@ from django.utils.text import slugify
 
 
 def upload_to(instance, filename):
+    qs = Post.objects.all()
+    instance_id = 1
+    if qs.exists():
+        instance_id = qs.first().id + 1
     filename = filename.split(".")
-    filename = "%s_%s_%s.%s" % (filename[0], instance.id, random.randrange(100), filename[1])
+    filename = "%s_%s_%s.%s" % (filename[0], instance_id, random.randrange(100), filename[1])
     return filename
 
 
@@ -43,12 +47,13 @@ def pre_save_slug_modify(sender, instance, *args, **kwargs):
     else:
         qs = Post.objects.all()
         if qs.exists():
-            index = qs.last() + 1
+            index = qs.first().id + 1
             slug = "%s-%s" % (instance.title, index)
             slug = slugify(slug)
             instance.slug = slug
         else:
             slug = "%s-1" % instance.title
+            slug = slugify(slug)
             instance.slug = slug
 
 pre_save.connect(receiver=pre_save_slug_modify, sender=Post)
