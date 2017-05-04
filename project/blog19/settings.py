@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # my apps
     'project.posts',
+    # third party apps
+    'formfactory',
 ]
 
 MIDDLEWARE_CLASSES = [
