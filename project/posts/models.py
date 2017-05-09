@@ -4,6 +4,7 @@ import random
 
 from django.db import models
 from django.db.models.signals import pre_save
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.utils.text import slugify
 
@@ -25,7 +26,7 @@ class Post(models.Model):
     image = models.ImageField(null=True, blank=True, upload_to=upload_to, height_field="height", width_field="width")
     height = models.IntegerField(default=0)
     width = models.IntegerField(default=0)
-    author = models.CharField(max_length=120)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
 
