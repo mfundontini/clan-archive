@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.db.models import Q
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -10,7 +10,16 @@ from .forms import PostCreateForm
 
 # Create your views here.
 def home(request):
-    queryset_list = Post.objects.all()
+    queryset_list = Post.objects.active()
+    if request.user.is_staff:
+        queryset_list = Post.objects.all()
+    search = request.GET.get("q")
+    if search:
+        queryset_list = queryset_list.filter(
+            Q(title__icontains=search) |
+            Q(body__icontains=search) |
+            Q(author__icontains=search)
+        ).distinct()
     paginator = Paginator(queryset_list, 10)  # Show 10 posts per page
     page_index = "page"
     page = request.GET.get(page_index)

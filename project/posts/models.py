@@ -5,6 +5,7 @@ import random
 from django.db import models
 from django.db.models.signals import pre_save
 from django.core.urlresolvers import reverse
+from django.utils import timezone
 from django.utils.text import slugify
 
 
@@ -18,6 +19,11 @@ def upload_to(instance, filename):
     return filename
 
 
+class PostManager(models.Manager):
+    def active(self, *args, **kwargs):
+        return super(PostManager, self).filter(draft=False).filter(publish_on__lte=timezone.now())
+
+
 class Post(models.Model):
     title = models.CharField(max_length=120)
     body = models.TextField()
@@ -26,8 +32,12 @@ class Post(models.Model):
     height = models.IntegerField(default=0)
     width = models.IntegerField(default=0)
     author = models.CharField(max_length=120)
+    draft = models.BooleanField(default=False)
+    publish_on = models.DateField(auto_now=False, auto_now_add=False)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
+
+    objects = PostManager()
 
     def __unicode__(self):
         return "%s by %s" % (self.title, self.author)

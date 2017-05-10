@@ -21,10 +21,12 @@
                 </div>
             </div>
             {% endif %}
-            <h3>{{ post.title }}</h3>
+            <h3>{{ post.title }} -- {% if post.draft %} <span style="color: red;">DRAFT</span>{% endif %} -- {{ post.publish_on }}</h3>
             <p>{{ post.body }}</p>
             <p>{{ post.author }}</p>
             <a href="{% url 'posts:update' post.id %}">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'posts:delete' post.id %}">Delete</a>
+            <hr/>
+            <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
         </div>
     </div>
 
