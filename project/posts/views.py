@@ -1,9 +1,11 @@
 from urllib import quote_plus
 
-from django.shortcuts import render, get_object_or_404, redirect
 from django.core.urlresolvers import reverse
-from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.http import Http404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Post
 from .forms import PostCreateForm
@@ -30,7 +32,10 @@ def home(request):
     return render(request, "home.html", context)
 
 
+@login_required()
 def create(request):
+    if not request.user.is_staff:
+        raise Http404
     form = PostCreateForm(files=request.FILES or None)
     context = {
         "form": form
@@ -42,6 +47,7 @@ def create(request):
 
         if form.is_valid():
             instance = form.save(commit=False)
+            instance.author = request.user
             instance.save()
             messages.success(request, "Succesfully created %s" % instance.title)
             return redirect(instance.get_absolute_url())
@@ -64,6 +70,7 @@ def detail(request, pk):
     return render(request, "detail.html", context)
 
 
+@login_required()
 def update(request, pk):
     instance = get_object_or_404(Post, pk=pk)
     form = PostCreateForm(instance=instance)
@@ -88,7 +95,10 @@ def update(request, pk):
     return render(request, "update.html", context)
 
 
+@login_required()
 def delete(request, pk):
+    if not request.user.is_staff:
+        raise Http404
     instance = get_object_or_404(Post, pk=pk)
     title = instance.title
     instance.delete()
