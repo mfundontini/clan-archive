@@ -22,7 +22,7 @@ def home(request):
         queryset_list = queryset_list.filter(
             Q(title__icontains=search) |
             Q(body__icontains=search) |
-            Q(author__icontains=search)
+            Q(author__username__icontains=search)
         ).distinct()
     paginator = Paginator(queryset_list, 10)  # Show 10 posts per page
     page_index = "page"
