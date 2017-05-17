@@ -137,3 +137,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "upload_to", "media")
 
 LOGIN_URL = '/admin/'
+
+AUTH_USER_MODEL = "posts.User"
