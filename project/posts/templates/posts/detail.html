@@ -23,7 +23,7 @@
             {% endif %}
             <h3 class="text-center">{{ post.title }} -- {% if post.draft %} <span style="color: red;">DRAFT</span>{% endif %} -- {{ post.publish_on }}</h3>
             <p>{{ post.body }}</p>
-            <p>Author: {{ post.author.get_full_name }}
+            <p>Author: {% if post.author.get_full_name %} {{ post.author.get_full_name }} {% else %} {{ post.author.username }} {% endif %}
                 <a class="pull-right" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">&nbsp;&nbsp;
                     <i class="fa fa-facebook-official" aria-hidden="true"></i>
                 </a>
@@ -34,8 +34,18 @@
                     <i class="fa fa-linkedin-square" aria-hidden="true"></i>
                 </a>
             </p>
+            <a href="{% url 'posts:update' post.id %}">
+                <i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;Edit
+            </a>
+            <a class="pull-right" href="{% url 'posts:delete' post.id %}">
+                <i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;&nbsp;Delete
+            </a>
             <hr/>
-            <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
