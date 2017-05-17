@@ -1,5 +1,6 @@
 from urllib import quote_plus
 
+from django.db.models import Q
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
@@ -13,7 +14,16 @@ from .forms import PostCreateForm
 
 # Create your views here.
 def home(request):
-    queryset_list = Post.objects.all()
+    queryset_list = Post.objects.active()
+    if request.user.is_staff:
+        queryset_list = Post.objects.all()
+    search = request.GET.get("q")
+    if search:
+        queryset_list = queryset_list.filter(
+            Q(title__icontains=search) |
+            Q(body__icontains=search) |
+            Q(author__username__icontains=search)
+        ).distinct()
     paginator = Paginator(queryset_list, 10)  # Show 10 posts per page
     page_index = "page"
     page = request.GET.get(page_index)
@@ -104,6 +114,3 @@ def delete(request, pk):
     instance.delete()
     messages.success(request, "Succesfully deleted %s" % title)
     return redirect(reverse("posts:home"))
-
-
-
