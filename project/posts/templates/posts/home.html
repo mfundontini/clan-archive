@@ -41,9 +41,9 @@
                         </div>
                     </div>
                     </br>
-                            <p class="text-justify">{{ post.body }}</p>
-                            <p>{{ post.author }}</p>
-                            <a href="{% url 'posts:update' post.id %}"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="pull-right" href="{% url 'posts:delete' post.id %}"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;Delete</a>
+                        <p class="text-justify">{{ post.body }}</p>
+                        <p>Author: {{ post.author.get_full_name }}</p>
+                        <a href="{% url 'posts:update' post.id %}"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="pull-right" href="{% url 'posts:delete' post.id %}"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;Delete</a>
                     <hr>
                 {% endfor %}
                 <div class="pagination">

@@ -4,6 +4,8 @@ import random
 
 from django.db import models
 from django.db.models.signals import pre_save
+from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import settings
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.utils.text import slugify
@@ -24,6 +26,10 @@ class PostManager(models.Manager):
         return super(PostManager, self).filter(draft=False).filter(publish_on__lte=timezone.now())
 
 
+class User(AbstractUser):
+    pass
+
+
 class Post(models.Model):
     title = models.CharField(max_length=120)
     body = models.TextField()
@@ -31,9 +37,9 @@ class Post(models.Model):
     image = models.ImageField(null=True, blank=True, upload_to=upload_to, height_field="height", width_field="width")
     height = models.IntegerField(default=0)
     width = models.IntegerField(default=0)
-    author = models.CharField(max_length=120)
     draft = models.BooleanField(default=False)
     publish_on = models.DateField(auto_now=False, auto_now_add=False)
+    author = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
 
