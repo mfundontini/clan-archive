@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     # apps
     'project.posts',
     # third party apps
-    'formfactory',
+    # 'formfactory',
 ]
 
 MIDDLEWARE_CLASSES = [
