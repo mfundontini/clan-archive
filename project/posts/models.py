@@ -39,7 +39,7 @@ class Post(models.Model):
     width = models.IntegerField(default=0)
     draft = models.BooleanField(default=False)
     publish_on = models.DateField(auto_now=False, auto_now_add=False)
-    author = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
     modified = models.DateTimeField(auto_now=True, auto_now_add=False)
 
