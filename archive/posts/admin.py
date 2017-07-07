@@ -4,7 +4,6 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import Post, User
 
 
-# Register your models here.
 class PostAdminInline(admin.StackedInline):
     model = Post
     can_delete = False
