@@ -60,8 +60,8 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "templates"),
-                 # os.path.join(BASE_DIR, "posts", "templates", "posts")
+        'DIRS': [os.path.join(BASE_DIR, "archive", "templates"),
+                 os.path.join(BASE_DIR, "archive", "posts", "templates", "posts")
                  ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -134,12 +134,12 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "upload_to", "static")
 
 STATICFILES_DIRS = [
-    os.path.join(os.path.dirname(BASE_DIR), "upload_from", "static"),
+    os.path.join("upload_from", "static"),
 ]
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "upload_to", "media")
+MEDIA_ROOT = os.path.join("upload_to", "media")
 
 LOGIN_URL = '/admin/'
 
