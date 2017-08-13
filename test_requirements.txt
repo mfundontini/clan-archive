@@ -4,3 +4,5 @@ packaging==16.8
 Pillow==4.1.0
 pyparsing==2.2.0
 six==1.10.0
+django-object-tools==1.11.0
+django-formtools==2.0
