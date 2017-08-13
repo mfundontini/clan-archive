@@ -22,9 +22,9 @@ import object_tools
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r"^post/", include("project.posts.urls", namespace="posts")),
     url(r'^object-tools/', include(object_tools.tools.urls)),
-    # url(r'^formfactory/', include("formfactory.urls", namespace="formfactory"))
+    # url(r'^formfactory/', include("formfactory.urls", namespace="formfactory")),
+    url(r"^post/", include("archive.posts.urls", namespace="posts")),
 ]
 
 if settings.DEBUG:

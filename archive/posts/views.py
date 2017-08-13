@@ -1,10 +1,10 @@
 from urllib import quote_plus
 
-from django.db.models import Q
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -112,5 +112,5 @@ def delete(request, pk):
     instance = get_object_or_404(Post, pk=pk)
     title = instance.title
     instance.delete()
-    messages.success(request, "Succesfully deleted %s" % title)
+    messages.success(request, "Successfully deleted %s" % title)
     return redirect(reverse("posts:home"))
