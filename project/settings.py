@@ -131,15 +131,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "upload_to", "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "upload_to", "static")
 
 STATICFILES_DIRS = [
-    os.path.join("upload_from", "static"),
+    os.path.join(BASE_DIR, "upload_from", "static"),
 ]
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.path.join("upload_to", "media")
+MEDIA_ROOT = os.path.join(BASE_DIR, "upload_to", "media")
 
 LOGIN_URL = '/admin/'
 
