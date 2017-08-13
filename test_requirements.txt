@@ -6,4 +6,4 @@ pyparsing==2.2.0
 six==1.10.0
 django-object-tools==1.11.0
 django-formtools==2.0
--e git+git@github.com:praekelt/django-export.git@600d061b9c893c12bb55962eed2f5323b2c7b77f#egg=django_export
+django_export
