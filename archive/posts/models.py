@@ -7,8 +7,10 @@ from django.db.models.signals import pre_save
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import settings
 from django.core.urlresolvers import reverse
-from django.utils import timezone
+from django.utils import timezone, safestring
 from django.utils.text import slugify
+
+from markdown_deux import markdown
 
 
 def upload_to(instance, filename):
@@ -50,6 +52,11 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse("posts:detail", kwargs={"pk": self.pk})
+
+    def get_marked_content(self):
+        content = markdown(self.body)
+        marked = safestring.mark_safe(content)
+        return marked
 
     class Meta:
         ordering = ["-created", "-modified"]
