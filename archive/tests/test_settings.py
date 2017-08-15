@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # apps
-    'archive.posts'
+    'archive.posts',
     # third party apps
     'pagedown'
 ]
