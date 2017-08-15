@@ -5,23 +5,22 @@
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
             <div class="post-section">
-                <h1 class="text-center">DETAIL</h1>
-                    {% if messages %}
-                        <ul class="messages">
-                            {% for message in messages %}
-                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                    {% if post.image %}
-                        <div class="row">
-                            <div class="col-sm-6 col-sm-offset-3">
-                                <img class="post-image" src="{{ post.image.url }}" class="img-responsive">
-                            </div>
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% if post.image %}
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <img class="post-image" src="{{ post.image.url }}" class="img-responsive">
                         </div>
-                    {% endif %}
+                    </div>
+                {% endif %}
                 <h3 class="text-center">{{ post.title }} -- {% if post.draft %} <span style="color: red;">DRAFT</span>{% endif %} -- {{ post.publish_on }}</h3>
-                    <p>{{ post.body }}</p>
+                    <div class="post-body">{{ post.body }}</div>
                     <p>Author: {% if post.author.get_full_name %} {{ post.author.get_full_name }} {% else %} {{ post.author.username }} {% endif %}
                         <a class="pull-right" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">&nbsp;&nbsp;
                             <i class="fa fa-facebook-official" aria-hidden="true"></i>
@@ -52,6 +51,4 @@
 
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/comments.js' %}"></script>
 {% endblock %}
