@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     # apps
     'archive.posts'
     # third party apps
+    'pagedown'
 ]
 
 MIDDLEWARE_CLASSES = [
