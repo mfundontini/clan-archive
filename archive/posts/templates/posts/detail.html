@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block content %}
     <div class="row">
@@ -12,7 +13,6 @@
                             {% endfor %}
                         </ul>
                     {% endif %}
-                    Here is the blog you clicked:</br>
                     {% if post.image %}
                         <div class="row">
                             <div class="col-sm-6 col-sm-offset-3">
@@ -52,4 +52,6 @@
 
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/comments.js' %}"></script>
 {% endblock %}
