@@ -49,4 +49,6 @@ mothership/dealuploader/coverage/
 .tox/
 dj19/
 *.sqlite3
+upload_to/static/pagedown/
+upload_to/static/pagedown-extra/
 
