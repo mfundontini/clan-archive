@@ -41,7 +41,9 @@
                         </div>
                     </div>
                     </br>
-                        <p class="text-justify">{{ post.body }}</p>
+                        <div class="text-justify" >
+                            <div class="home-post-body" >{{ post.body }}</div>
+                        </div>
                         <p>Author: {% if post.author.get_full_name %} {{ post.author.get_full_name }} {% else %} {{ post.author.username }} {% endif %}</p>
                         <a href="{% url 'posts:update' post.id %}"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="pull-right" href="{% url 'posts:delete' post.id %}"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;Delete</a>
                     <hr>
