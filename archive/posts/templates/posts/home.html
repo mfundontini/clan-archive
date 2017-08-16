@@ -1,13 +1,18 @@
 {% extends "base.html" %}
 
 {% block style %}
-    .no-lines{
-    text-decoration: none;
+    .no-lines
+    {
+        text-decoration: none;
+    }
+    a:hover
+    {
+        text-decoration: none;
     }
 {% endblock %}
 
 {% block content %}
-    <div class="row">
+<div class="row" xmlns="http://www.w3.org/1999/html">
         <div class="col-sm-6 col-sm-offset-3">
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3">
@@ -18,9 +23,12 @@
             </div>
             <div>
                 <a class="no-lines" href="{% url 'posts:create' %}"><span class="lead"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;nawe faka esakho</span></a>
-                <form class="pull-right" method="get"  action="">
-                    <input type="text" name="q" placeholder="Search posts" value="{{ request.GET.q }}"/>
-                    <input type="submit" value="Search"/>
+                <br /><br />
+                <form method="get"  action="">
+                    <div class="input-group" >
+                        <input class="form-control" type="text" name="q" placeholder="Search posts" value="{{ request.GET.q }}"/>
+                        <span class="input-group-btn "><input class="btn btn-default" type="submit" value="Search" /></span>
+                    </div>
                 </form>
             </div>
             {% if messages %}
