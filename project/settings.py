@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # apps
     'archive.posts',
     # third party apps
+    'crispy_forms',
     'pagedown',
     'markdown_deux',
 ]
@@ -146,3 +147,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "upload_to", "media")
 LOGIN_URL = '/admin/'
 
 AUTH_USER_MODEL = "posts.User"
+
+CRISPY_TEMPLATE_PACK = "bootstrap3"
