@@ -5,11 +5,20 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-sm-6 col-sm-offset-3">
-            <h1>
-                UPDATE
-            </h1>
+    <div class="row"  >
+        <div id="preview-container" class="col-sm-6" hidden>
+            <input type="button" id="hide-preview" class="btn-primary" value="Hide Preview" />
+            <hr >
+            <div id="title-preview" ></div>
+            <br /><br />
+            <div id="content-preview" ></div>
+            <br />
+            <hr >
+        </div>
+
+        <div id="edit-container" class="col-sm-6">
+            <input type="button" id="show-preview" class="btn-primary" value="Show Preview" />
+            <hr >
             <form method="POST" enctype="multipart/form-data" action="">
                 {% csrf_token %}
                     {% for field in form %}
@@ -23,4 +32,3 @@
         </div>
     </div>
 {% endblock %}
-
