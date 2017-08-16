@@ -6,7 +6,7 @@ from .models import Post
 
 
 class PostCreateForm(forms.ModelForm):
-    body = forms.CharField(widget=PagedownWidget)
+    body = forms.CharField(widget=PagedownWidget(show_preview=False))
 
     class Meta:
         model = Post
