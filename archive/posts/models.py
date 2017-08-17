@@ -12,6 +12,8 @@ from django.utils.text import slugify
 
 from markdown_deux import markdown
 
+from archive.comments.models import Comment
+
 
 def upload_to(instance, filename):
     qs = Post.objects.all()
@@ -57,6 +59,16 @@ class Post(models.Model):
         content = markdown(self.body)
         marked = safestring.mark_safe(content)
         return marked
+
+    @property
+    def comments(self):
+        qs = Comment.objects.filter_by_instance(self)
+        return qs
+
+    @property
+    def comment_count(self):
+        number = self.comments.count()
+        return number
 
     class Meta:
         ordering = ["-created", "-modified"]

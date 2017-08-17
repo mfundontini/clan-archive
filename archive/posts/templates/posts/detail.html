@@ -44,18 +44,25 @@
             <hr/>
             <input id="show-comments" type="button" class="btn-primary" value="Show Comments" />
             <div id="comments-section" hidden >
-                <div class="row">
-                    <div class="col-sm-6 col-sm-offset-2">
-                        <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
-                    </div>
-                </div>
+                <!--The code below is for using facebookk comments which are not used in this case-->
+                <!--<div class="row">-->
+                    <!--<div class="col-sm-6 col-sm-offset-2">-->
+                        <!--<div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <hr>
                 <div class="row">
                     <div class="col-sm-6 col-sm-offset-2">
-                        {% if comments %}
+                        {% if post.comments %}
                             <div>
-                                {% for comment in comments %}
-                                <p>{{comment.body}} by : {{comment.user.username}}</p>
+                                <strong>{{post.comment_count}} Comments</strong>
+                                {% for comment in post.comments %}
+                                <hr >
+                                <blockquote>
+                                    <p>{{comment.body}}</p>
+                                    <footer>via {{comment.user.username}} | {{comment.date_added|timesince}} ago</footer>
+                                </blockquote>
+                                <hr >
                                 {% endfor %}
                             </div>
                         {% endif %}
