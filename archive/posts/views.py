@@ -4,13 +4,14 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Post
 from .forms import PostCreateForm
-
+from archive.comments.models import Comment
 
 # Create your views here.
 def home(request):
@@ -72,10 +73,13 @@ def detail(request, pk):
     instance = get_object_or_404(Post, pk=pk)
     content = instance.title
     content = quote_plus(content)
-
+    content_type = ContentType.objects.get_for_model(Post)
+    object_id = instance.id
+    comments = Comment.objects.filter(content_type=content_type, object_id=object_id)
     context = {
         "post": instance,
-        "url_string": content
+        "url_string": content,
+        "comments": comments,
     }
     return render(request, "detail.html", context)
 
