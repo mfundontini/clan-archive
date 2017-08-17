@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block content %}
     <div class="row">
@@ -53,8 +54,15 @@
                 <hr>
                 <div class="row">
                     <div class="col-sm-6 col-sm-offset-2">
+                        {% if form %}
+                        <form method="POST" action="" >{% csrf_token %}
+                            {{form|crispy}}
+                            <input class="btn btn-default" type="submit" value="Add Comment" />
+                        </form>
+                        {% endif %}
                         {% if post.comments %}
                             <div>
+                                <br><br>
                                 <strong>{{post.comment_count}} Comments</strong>
                                 {% for comment in post.comments %}
                                 <hr >

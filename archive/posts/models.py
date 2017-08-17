@@ -6,6 +6,7 @@ from django.db import models
 from django.db.models.signals import pre_save
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import settings
+from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.utils import timezone, safestring
 from django.utils.text import slugify
@@ -69,6 +70,11 @@ class Post(models.Model):
     def comment_count(self):
         number = self.comments.count()
         return number
+
+    @property
+    def content_type(self):
+        c_type = ContentType.objects.get_for_model(self.__class__)
+        return c_type
 
     class Meta:
         ordering = ["-created", "-modified"]

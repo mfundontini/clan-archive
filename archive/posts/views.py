@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
@@ -11,6 +12,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
 from .forms import PostCreateForm
 from archive.comments.models import Comment
+from archive.comments.forms import CreateCommentForm
 
 
 # Create your views here.
@@ -74,10 +76,32 @@ def detail(request, pk):
     content = instance.title
     content = quote_plus(content)
     comments = Comment.objects.filter_by_instance(instance)
+    form = None
+
+    if request.user.is_authenticated():
+        initial = {
+            "content_type": instance.content_type,
+            "object_id": instance.id,
+        }
+        form = CreateCommentForm(request.POST or None, initial=initial)
+        if form.is_valid():
+            form_content_type = form.cleaned_data.get("content_type")
+            content_type = ContentType.objects.get(model=form_content_type)
+            form_object_id = form.cleaned_data.get("object_id")
+            form_comment = form.cleaned_data.get("comment_body")
+
+            comment, created = Comment.objects.get_or_create(
+                user=request.user,
+                content_type=content_type,
+                object_id=form_object_id,
+                body=form_comment,
+            )
+
     context = {
         "post": instance,
         "url_string": content,
         "comments": comments,
+        "form": form,
     }
     return render(request, "detail.html", context)
 

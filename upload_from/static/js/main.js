@@ -4,6 +4,8 @@ $(document).ready(function(){
         $("#show-comments").hide();
     });
 
+    $("#id_comment_body").val("");
+
     $("#show-preview").click(function(){
         $("#edit-container").addClass("pull-right");
         $("#show-preview").attr("disabled", "disabled");
