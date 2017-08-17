@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # apps
     'archive.posts',
+    'archive.comments',
     # third party apps
     'crispy_forms',
     'pagedown',
