@@ -33,6 +33,12 @@ $(document).ready(function(){
         $("#preview-container").removeClass("pull-left").hide();
         $("#show-preview").removeAttr("disabled");
     });
+
+    $(".reply-textarea-button").click(function(){
+        $(this).next().show();
+        $(this).hide();
+    });
+
 // The code below is used to set markdown on the client side and not the server, markdown-deux does back-end markdown
 //    var unmarked = $(".post-body").text();
 //    var markedHTML = marked(unmarked);

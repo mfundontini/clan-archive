@@ -63,7 +63,7 @@ class Post(models.Model):
 
     @property
     def comments(self):
-        qs = Comment.objects.filter_by_instance(self)
+        qs = Comment.objects.filter_parents_by_instance(self)
         return qs
 
     @property

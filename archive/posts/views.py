@@ -89,12 +89,19 @@ def detail(request, pk):
             content_type = ContentType.objects.get(model=form_content_type)
             form_object_id = form.cleaned_data.get("object_id")
             form_comment = form.cleaned_data.get("comment_body")
+            comment_id = str(request.POST.get("comment_id"))
+            try:
+                comment_instance = Comment.objects.get(id=comment_id)
+                parent = comment_instance
+            except:
+                parent = None
 
             comment, created = Comment.objects.get_or_create(
                 user=request.user,
                 content_type=content_type,
                 object_id=form_object_id,
                 body=form_comment,
+                parent=parent,
             )
 
     context = {
