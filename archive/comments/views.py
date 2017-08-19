@@ -7,7 +7,10 @@ from .models import Comment
 
 def reply(request, comment):
     comment = Comment.objects.get(id=int(comment))
-    parent = comment.parent
+    parent = comment
+
+    if comment.parent:
+        parent = comment.parent
     context = {
         "comment": parent,
     }
