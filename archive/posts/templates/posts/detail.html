@@ -63,7 +63,7 @@
                         {% if post.comments %}
                             <div>
                                 <br><br>
-                                <strong>{{post.comment_count}} Comments</strong>
+                                <strong>{{post.comment_count}} Comments</strong><span class="pull-right"><a href="{% url 'comments:thread' 'post' post.id %}"> View Comments</a></span>
                                 {% for comment in post.comments %}
                                     <hr >
                                     <blockquote>
