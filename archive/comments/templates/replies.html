@@ -17,14 +17,16 @@
                     </blockquote>
                     {% endfor %}
                 </blockquote>
-                <input type="button" class="reply-textarea-button" value="Add Reply" />
-                <div class="reply-textarea" hidden>
-                    <form method="POST" action="" >{% csrf_token %}
-                        {{form|crispy}}
-                        <input type="hidden" id="comment_id" name="comment_id" value="{{comment.id}}" />
-                        <input class="btn btn-default" type="submit" value="Add Reply" />
-                    </form>
-                </div>
+                {% if form %}
+                    <input type="button" class="reply-textarea-button" value="Add Reply" />
+                    <div class="reply-textarea" hidden>
+                        <form method="POST" action="" >{% csrf_token %}
+                            {{form|crispy}}
+                            <input type="hidden" id="comment_id" name="comment_id" value="{{comment.id}}" />
+                            <input class="btn btn-default" type="submit" value="Add Reply" />
+                        </form>
+                    </div>
+                {% endif %}
                 <hr >
             </div>
         </div>

@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import thread, reply, CommentThreadView, CommentReplyView
+from .views import CommentThreadView, CommentReplyView
 
 app_name = "comments"
 

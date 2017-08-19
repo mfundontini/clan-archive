@@ -134,8 +134,9 @@ class CommentThreadView(TemplateView):
         context = {
             "comments": self.comments,
             "instance": self.instance,
-            "form": form,
         }
+        if self.request.user.is_authenticated():
+            context["form"] = form
         return context
 
 
@@ -185,6 +186,7 @@ class CommentReplyView(TemplateView):
 
         context = {
             "comment": self.parent,
-            "form": form,
         }
+        if self.request.user.is_authenticated():
+            context["form"] = form
         return context
