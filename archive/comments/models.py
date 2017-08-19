@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from django.core.urlresolvers import reverse
 
 
 class CommentManager(models.Manager):
@@ -42,3 +43,11 @@ class Comment(models.Model):
 
     def __unicode__(self):
         return str(self.user.username)
+
+    def get_absolute_url(self):
+        instance = self.content_type.model_class().objects.get(id=self.object_id).id
+        if self.is_parent:
+            # return thread
+            return reverse("comments:thread", kwargs={"content": "post", "pk": instance})
+        # return reply
+        return reverse("comments:reply", kwargs={"comment": self.pk})

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <!--{% if form %}-->
+            <!--<form method="POST" action="" >{% csrf_token %}-->
+                <!--{{form|crispy}}-->
+                <!--<input class="btn btn-default" type="submit" value="Add Comment" />-->
+            <!--</form>-->
+            <!--{% endif %}-->
+            <div>
+                <hr >
+                <blockquote>
+                    <p>{{comment.body}}</p>
+                    <footer>via {{comment.user.username}} | {{comment.date_added|timesince}} ago</footer>
+                    {% for child in comment.children %}
+                    <blockquote>
+                        <p>{{child.body}}</p>
+                        <footer>via {{child.user.username}} | {{child.date_added|timesince}} ago</footer>
+                    </blockquote>
+                    {% endfor %}
+                </blockquote>
+                <input type="button" class="reply-textarea-button" value="Add Reply" />
+                <div class="reply-textarea" hidden>
+                    <!--<form method="POST" action="" >{% csrf_token %}-->
+                        <!--{{form|crispy}}-->
+                        <!--<input type="hidden" id="comment_id" name="comment_id" value="{{comment.id}}" />-->
+                        <!--<input class="btn btn-default" type="submit" value="Add Reply" />-->
+                    <!--</form>-->
+                </div>
+                <hr >
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Post
@@ -103,6 +103,7 @@ def detail(request, pk):
                 body=form_comment,
                 parent=parent,
             )
+            return HttpResponseRedirect(comment.get_absolute_url())
 
     context = {
         "post": instance,
