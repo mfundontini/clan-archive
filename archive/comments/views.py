@@ -7,6 +7,7 @@ from django.views.generic import TemplateView
 
 from .forms import CreateCommentForm
 from .models import Comment
+from .utils import make_new_form
 # I left the function based views uncommented out, even though they are ot used, for future reference
 
 
@@ -100,7 +101,7 @@ class CommentThreadView(TemplateView):
         self.content_type = ContentType.objects.get(model=content)
         self.instance = self.content_type.model_class().objects.get(id=self.object_id)
         self.comments = Comment.objects.filter(content_type=self.content_type, object_id=self.object_id)
-        context = self.get_context_data(**kwargs)
+        context = self.get_context_data(obj_id=self.object_id, c_type=self.content_type, **kwargs)
         if self.request.is_ajax():
             html = render_to_string("comments_partial.html", context=context, request=self.request)
             serialized_data = json.dumps({"html": html})
@@ -128,23 +129,29 @@ class CommentThreadView(TemplateView):
                 body=form_comment,
                 parent=parent,
             )
+            if self.request.is_ajax():
+                comments = Comment.objects.filter(content_type=content_type, object_id=form_object_id)
+                instance = content_type.model_class().objects.get(id=form_object_id)
+                new_form = make_new_form(self.request, form_object_id, content_type)
+                context = {
+                    "form": new_form,
+                    "comments": comments,
+                    "instance": instance,
+                }
+                html = render_to_string("comments_partial.html", context=context, request=self.request)
+                serialized_data = json.dumps({"html": html})
+                return HttpResponse(serialized_data, content_type="application/json")
             return HttpResponseRedirect(comment.get_absolute_url())
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, obj_id=None, c_type=None, **kwargs):
         super(CommentThreadView, self).get_context_data(**kwargs)
-
-        initial = {
-            "content_type": self.content_type,
-            "object_id": self.object_id,
-        }
-        form = CreateCommentForm(initial=initial)
-
+        form = make_new_form(self.request, obj_id=obj_id, c_type=c_type)
         context = {
             "comments": self.comments,
             "instance": self.instance,
+            "form": form,
         }
-        if self.request.user.is_authenticated():
-            context["form"] = form
+
         return context
 
 

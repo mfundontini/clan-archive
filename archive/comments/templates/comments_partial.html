@@ -7,7 +7,7 @@
             {% if form %}
                 <form method="POST" action="" >{% csrf_token %}
                     {{form|crispy}}
-                    <input class="btn btn-default" type="submit" value="Add Comment" />
+                    <input id="post-comment" post-url="{% url 'comments:thread' 'post' instance.id %}" class="btn btn-default" type="submit" value="Add Comment" />
                 </form>
             {% endif %}
             {% if instance.comments %}

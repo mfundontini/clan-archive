@@ -18,6 +18,28 @@ $(document).ready(function(){
         $("#show-comments").hide();
     });
 
+    $('#comments-section').on("click", "#post-comment", function(event) {
+        event.preventDefault();
+        var form = $(this).parent();
+        var formData = form.serialize()
+        var postUrl = $(this).attr("post-url")
+        function handlePostSuccess(data, textStatus, jqXHR){
+            $("#comments-section").html(data.html);
+        };
+        function handlePostErrors(jqXHR, textStatus, errorThrown){
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+        };
+        $.ajax({
+            method: "POST",
+            url: postUrl,
+            data: formData,
+            success: handlePostSuccess,
+            error: handlePostErrors,
+        });
+    });
+
     $("#id_comment_body").val("");
 
     $("#show-preview").click(function(){
