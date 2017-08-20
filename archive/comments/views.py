@@ -1,5 +1,8 @@
+import json
+
 from django.contrib.contenttypes.models import ContentType
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse
+from django.template.loader import render_to_string
 from django.views.generic import TemplateView
 
 from .forms import CreateCommentForm
@@ -89,6 +92,7 @@ def thread(request, content, pk):
 
 class CommentThreadView(TemplateView):
     template_name = "comments.html"
+    partial_template = "comments_partial.html"
 
     def get(self, *args, **kwargs):
         content = kwargs.get("content")
@@ -97,6 +101,10 @@ class CommentThreadView(TemplateView):
         self.instance = self.content_type.model_class().objects.get(id=self.object_id)
         self.comments = Comment.objects.filter(content_type=self.content_type, object_id=self.object_id)
         context = self.get_context_data(**kwargs)
+        if self.request.is_ajax():
+            html = render_to_string("comments_partial.html", context=context, request=self.request)
+            serialized_data = json.dumps({"html": html})
+            return HttpResponse(serialized_data, content_type="application/json")
         return self.render_to_response(context)
 
     def post(self, *args, **kwargs):

@@ -43,58 +43,8 @@
                     </a>
             </div>
             <hr/>
-            <input id="show-comments" type="button" class="btn-primary" value="Show Comments" />
-            <div id="comments-section" hidden >
-                <!--The code below is for using facebookk comments which are not used in this case-->
-                <!--<div class="row">-->
-                    <!--<div class="col-sm-6 col-sm-offset-2">-->
-                        <!--<div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <hr>
-                <div class="row">
-                    <div class="col-sm-6 col-sm-offset-2">
-                        {% if form %}
-                        <form method="POST" action="" >{% csrf_token %}
-                            {{form|crispy}}
-                            <input class="btn btn-default" type="submit" value="Add Comment" />
-                        </form>
-                        {% endif %}
-                        {% if post.comments %}
-                            <div>
-                                <br><br>
-                                <strong>{{post.comment_count}} Comments</strong><span class="pull-right"><a href="{% url 'comments:thread' 'post' post.id %}"> View Comments</a></span>
-                                {% for comment in post.comments %}
-                                    <hr >
-                                    <blockquote>
-                                        <p>{{comment.body}}</p>
-                                        <footer>via {{comment.user.username}} | {{comment.date_added|timesince}} ago</footer>
-                                        {% for child in comment.children %}
-                                        <blockquote>
-                                            <p>{{child.body}}</p>
-                                            <footer>via {{child.user.username}} | {{child.date_added|timesince}} ago</footer>
-                                        </blockquote>
-                                        {% endfor %}
-                                    </blockquote>
-                                    {% if form %}
-                                        <span class="pull-right"><a href="{% url 'comments:reply' comment.id %}"> View Replies</a></span><input type="button" class="reply-textarea-button" value="Add Reply" />
-                                        <div class="reply-textarea" hidden>
-                                            <form method="POST" action="" >{% csrf_token %}
-                                                {{form|crispy}}
-                                                <input type="hidden" id="comment_id" name="comment_id" value="{{comment.id}}" />
-                                                <input class="btn btn-default" type="submit" value="Add Reply" />
-                                            </form>
-                                        </div>
-                                    {% else %}
-                                        <div class="pull-left"><a href="{% url 'comments:reply' comment.id %}"> View Replies</a></div>
-                                        <br>
-                                    {% endif %}
-                                    <hr >
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
+            <input id="show-comments" type="button" data-url="{% url 'comments:thread' 'post' post.id %}" class="btn-primary" value="Show Comments" />
+            <div id="comments-section">
             </div>
             <hr >
 

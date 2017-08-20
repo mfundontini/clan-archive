@@ -1,6 +1,20 @@
 $(document).ready(function(){
     $("#show-comments").click(function(){
-        $("#comments-section").show();
+        var threadUrl = $(this).attr("data-url");
+        function handleSuccess(data, textStatus, jqXHR){
+            $("#comments-section").html(data.html);
+        };
+        function handleErrors(jqXHR, textStatus, errorThrown){
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+        };
+        $.ajax({
+            method: "GET",
+            url: threadUrl,
+            success: handleSuccess,
+            error: handleErrors,
+        });
         $("#show-comments").hide();
     });
 
@@ -33,13 +47,19 @@ $(document).ready(function(){
         $("#preview-container").removeClass("pull-left").hide();
         $("#show-preview").removeAttr("disabled");
     });
+//  This is the normal click event for the add reply buttons, however, we need to cater for dynamically added buttons so we use on("click")
+//    $(".reply-textarea-button").click(function(){
+//        $(this).next().show();
+//        $(this).hide();
+//    });
 
-    $(".reply-textarea-button").click(function(){
+    $('#comments-section').on("click", ".reply-textarea-button", function() {
         $(this).next().show();
         $(this).hide();
+
     });
 
-// The code below is used to set markdown on the client side and not the server, markdown-deux does back-end markdown
+//    The code below is used to set markdown on the client side and not the server, markdown-deux does back-end markdown
 //    var unmarked = $(".post-body").text();
 //    var markedHTML = marked(unmarked);
 //    $(".post-body").html(markedHTML);
