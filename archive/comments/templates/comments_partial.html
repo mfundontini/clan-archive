@@ -7,7 +7,7 @@
             {% if form %}
                 <form method="POST" action="" >{% csrf_token %}
                     {{form|crispy}}
-                    <input class="btn btn-default" type="submit" value="Add Comment" />
+                    <input id="post-comment" post-url="{% url 'comments:thread' 'post' instance.id %}" class="btn btn-default" type="submit" value="Add Comment" />
                 </form>
             {% endif %}
             {% if instance.comments %}
@@ -32,7 +32,7 @@
                                 <form method="POST" action="" >{% csrf_token %}
                                     {{form|crispy}}
                                     <input type="hidden" id="comment_id" name="comment_id" value="{{comment.id}}" />
-                                    <input class="btn btn-default" type="submit" value="Add Reply" />
+                                    <input class="add-reply-button" data-url="{% url 'comments:thread' 'post' instance.id %}" type="submit" value="Add Reply" />
                                 </form>
                             </div>
                         {% else %}
