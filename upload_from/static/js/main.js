@@ -17,7 +17,7 @@ $(document).ready(function(){
         });
         $("#show-comments").hide();
     });
-
+//   I still have to deal with form invalid and add a mixin for the extra code.
     $('#comments-section').on("click", "#post-comment", function(event) {
         event.preventDefault();
         var form = $(this).parent();
@@ -39,27 +39,28 @@ $(document).ready(function(){
             error: handlePostErrors,
         });
     });
+
     $('#comments-section').on("click", ".add-reply-button", function(event) {
         event.preventDefault();
-        console.log("clicked")
-//        var form = $(this).parent();
-//        var formData = form.serialize()
-//        var postUrl = $(this).attr("post-url")
-//        function handlePostSuccess(data, textStatus, jqXHR){
-//            $("#comments-section").html(data.html);
-//        };
-//        function handlePostErrors(jqXHR, textStatus, errorThrown){
-//            console.log(jqXHR);
-//            console.log(textStatus);
-//            console.log(errorThrown);
-//        };
-//        $.ajax({
-//            method: "POST",
-//            url: postUrl,
-//            data: formData,
-//            success: handlePostSuccess,
-//            error: handlePostErrors,
-//        });
+
+        var replyForm = $(this).parent();
+        var replyFormData = replyForm.serialize()
+        var replyPostUrl = $(this).attr("data-url")
+        function handlePostSuccess(data, textStatus, jqXHR){
+            $("#comments-section").html(data.html);
+        };
+        function handlePostErrors(jqXHR, textStatus, errorThrown){
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+        };
+        $.ajax({
+            method: "POST",
+            url: replyPostUrl,
+            data: replyFormData,
+            success: handlePostSuccess,
+            error: handlePostErrors,
+        });
     });
 
     $("#id_comment_body").val("");

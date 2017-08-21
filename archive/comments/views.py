@@ -157,6 +157,7 @@ class CommentThreadView(TemplateView):
 
 class CommentReplyView(TemplateView):
     template_name = "replies.html"
+    partial_template = "comments_partial.html"
 
     def get(self, *args, **kwargs):
         comment = int(kwargs.get("comment"))
@@ -188,6 +189,18 @@ class CommentReplyView(TemplateView):
                 body=form_comment,
                 parent=parent,
             )
+            if self.request.is_ajax():
+                comments = Comment.objects.filter(content_type=content_type, object_id=form_object_id)
+                instance = content_type.model_class().objects.get(id=form_object_id)
+                new_form = make_new_form(self.request, form_object_id, content_type)
+                context = {
+                    "form": new_form,
+                    "comments": comments,
+                    "instance": instance,
+                }
+                html = render_to_string("comments_partial.html", context=context, request=self.request)
+                serialized_data = json.dumps({"html": html})
+                return HttpResponse(serialized_data, content_type="application/json")
             return HttpResponseRedirect(comment.get_absolute_url())
 
     def get_context_data(self, object_pk=None, content_type=None, **kwargs):
