@@ -164,7 +164,7 @@ class CommentReplyView(TemplateView):
         self.parent = self.comment_instance
         if self.comment_instance.parent:
             self.parent = self.comment_instance.parent
-        context = self.get_context_data(**kwargs)
+        context = self.get_context_data(object_pk=self.comment_instance.object_id, content_type=self.comment_instance.content_type, **kwargs)
         return self.render_to_response(context)
 
     def post(self, *args, **kwargs):
@@ -190,18 +190,11 @@ class CommentReplyView(TemplateView):
             )
             return HttpResponseRedirect(comment.get_absolute_url())
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, object_pk=None, content_type=None, **kwargs):
         super(CommentReplyView, self).get_context_data(**kwargs)
-
-        initial = {
-            "content_type": self.comment_instance.content_type,
-            "object_id": self.comment_instance.object_id,
-        }
-        form = CreateCommentForm(initial=initial)
-
+        form = make_new_form(self.request, object_pk, content_type)
         context = {
             "comment": self.parent,
+            "form": form,
         }
-        if self.request.user.is_authenticated():
-            context["form"] = form
         return context
