@@ -211,3 +211,31 @@ class CommentReplyView(TemplateView):
             "form": form,
         }
         return context
+
+
+class CommentDeleteView(TemplateView):
+    template_name = "comments.html"
+    partial_template = "comments_partial.html"
+
+    def get(self, *args, **kwargs):
+        comment = int(kwargs.get("comment"))
+        comment_instance = Comment.objects.get(id=comment)
+        obj_id = comment_instance.object_id
+        c_type = comment_instance.content_type
+        comment_instance.delete()
+        context = self.get_context_data(object_pk=obj_id, content_type=c_type, **kwargs)
+        context["comments"] = Comment.objects.filter(object_id=obj_id, content_type=c_type)
+        context["instance"] = c_type.model_class().objects.get(id=obj_id)
+        if self.request.is_ajax():
+            html = render_to_string("comments_partial.html", context=context, request=self.request)
+            serialized_data = json.dumps({"html": html})
+            return HttpResponse(serialized_data, content_type="application/json")
+        return render(self.request, template_name="comments.html", context=context)
+
+    def get_context_data(self, object_pk=None, content_type=None, **kwargs):
+        super(CommentDeleteView, self).get_context_data(**kwargs)
+        form = make_new_form(self.request, object_pk, content_type)
+        context = {
+            "form": form,
+        }
+        return context

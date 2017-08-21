@@ -18,16 +18,16 @@
                         <hr >
                         <blockquote>
                             <p>{{comment.body}}</p>
-                            <footer>via {{comment.user.username}} | {{comment.date_added|timesince}} ago</footer>
+                            <footer>via {{comment.user.username}} | {{comment.date_added|timesince}} ago </footer>
                             {% for child in comment.children %}
                             <blockquote>
                                 <p>{{child.body}}</p>
-                                <footer>via {{child.user.username}} | {{child.date_added|timesince}} ago</footer>
+                                <footer>via {{child.user.username}} | {{child.date_added|timesince}} ago <a class="delete-comment pull-right" data-href="{% url 'comments:delete' child.id %}" href=""><i class="fa fa-trash-o" aria-hidden="true"></i></a></footer>
                             </blockquote>
                             {% endfor %}
                         </blockquote>
                         {% if form %}
-                            <span class="pull-right"><a href="{% url 'comments:reply' comment.id %}"> View Replies</a></span><input type="button" class="reply-textarea-button" value="Add Reply" />
+                            <span class="pull-right"><a href="{% url 'comments:reply' comment.id %}"> View Replies</a> | &nbsp;<a class="delete-comment"  data-href="{% url 'comments:delete' comment.id %}" href=""><i class="fa fa-trash-o" aria-hidden="true"></i></a></span><input type="button" class="reply-textarea-button" value="Add Reply" />
                             <div class="reply-textarea" hidden>
                                 <form method="POST" action="" >{% csrf_token %}
                                     {{form|crispy}}

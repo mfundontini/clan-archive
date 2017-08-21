@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
                 {% if form %}
-                    <form method="POST" action="" >{% csrf_token %}
+                    <form method="POST" action="{% url 'comments:thread' 'post' instance.id %}" >{% csrf_token %}
                         {{form|crispy}}
                         <input class="btn btn-default" type="submit" value="Add Comment" />
                     </form>
@@ -20,18 +20,18 @@
                             <hr >
                             <blockquote>
                                 <p>{{comment.body}}</p>
-                                <footer>via {{comment.user.username}} | {{comment.date_added|timesince}} ago</footer>
+                                <footer>via {{comment.user.username}} | {{comment.date_added|timesince}} ago </footer>
                                 {% for child in comment.children %}
                                 <blockquote>
                                     <p>{{child.body}}</p>
-                                    <footer>via {{child.user.username}} | {{child.date_added|timesince}} ago</footer>
+                                    <footer>via {{child.user.username}} | {{child.date_added|timesince}} ago <a class="pull-right" href="{% url 'comments:delete' child.id %}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></footer>
                                 </blockquote>
                                 {% endfor %}
                             </blockquote>
                             {% if form %}
-                                <span class="pull-right"><a href="{% url 'comments:reply' comment.id %}"> View Replies</a></span><input type="button" class="reply-textarea-button" value="Add Reply" />
+                                <span class="pull-right"><a href="{% url 'comments:reply' comment.id %}"> View Replies</a> | &nbsp;<a class="pull-right" href="{% url 'comments:delete' comment.id %}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></span><input type="button" class="reply-textarea-button" value="Add Reply" />
                                 <div class="reply-textarea" hidden>
-                                    <form method="POST" action="" >{% csrf_token %}
+                                    <form method="POST" action="{% url 'comments:thread' 'post' instance.id %}" >{% csrf_token %}
                                         {{form|crispy}}
                                         <input type="hidden" id="comment_id" name="comment_id" value="{{comment.id}}" />
                                         <input class="btn btn-default" type="submit" value="Add Reply" />
