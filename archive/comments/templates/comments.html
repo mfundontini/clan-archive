@@ -24,12 +24,12 @@
                                 {% for child in comment.children %}
                                 <blockquote>
                                     <p>{{child.body}}</p>
-                                    <footer>via {{child.user.username}} | {{child.date_added|timesince}} ago <a class="pull-right" href="{% url 'comments:delete' child.id %}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></footer>
+                                    <footer>via {{child.user.username}} | {{child.date_added|timesince}} ago {% if request.user == child.user %}<a class="delete-comment pull-right" data-href="{% url 'comments:delete' child.id %}" href=""><i class="fa fa-trash-o" aria-hidden="true"></i></a>{% endif %}</footer>
                                 </blockquote>
                                 {% endfor %}
                             </blockquote>
                             {% if form %}
-                                <span class="pull-right"><a href="{% url 'comments:reply' comment.id %}"> View Replies</a> | &nbsp;<a class="pull-right" href="{% url 'comments:delete' comment.id %}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></span><input type="button" class="reply-textarea-button" value="Add Reply" />
+                                <span class="pull-right"><a href="{% url 'comments:reply' comment.id %}"> View Replies</a> {% if request.user == comment.user %}| &nbsp;<a class="pull-right" href="{% url 'comments:delete' comment.id %}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>{% endif %}</span><input type="button" class="reply-textarea-button" value="Add Reply" />
                                 <div class="reply-textarea" hidden>
                                     <form method="POST" action="{% url 'comments:thread' 'post' instance.id %}" >{% csrf_token %}
                                         {{form|crispy}}
