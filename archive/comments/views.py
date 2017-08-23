@@ -1,7 +1,7 @@
 import json
 
 from django.contrib.contenttypes.models import ContentType
-from django.shortcuts import render, HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse, get_object_or_404
 from django.template.loader import render_to_string
 from django.views.generic import TemplateView
 
@@ -219,7 +219,11 @@ class CommentDeleteView(TemplateView):
 
     def get(self, *args, **kwargs):
         comment = int(kwargs.get("comment"))
-        comment_instance = Comment.objects.get(id=comment)
+        comment_instance = get_object_or_404(Comment, id=comment)
+        if comment_instance.user != self.request.user:
+            response = HttpResponse("<h1>You are not allowed to perform this action</h1>")
+            response.status_code = 403
+            return response
         obj_id = comment_instance.object_id
         c_type = comment_instance.content_type
         comment_instance.delete()
