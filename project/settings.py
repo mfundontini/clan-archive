@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # apps
     'archive.posts',
     'archive.comments',
+    'archive.accounts',
     # third party apps
     'crispy_forms',
     'pagedown',
@@ -145,7 +146,7 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "upload_to", "media")
 
-LOGIN_URL = '/admin/'
+LOGIN_URL = '/account/login'
 
 AUTH_USER_MODEL = "posts.User"
 

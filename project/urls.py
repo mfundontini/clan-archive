@@ -26,6 +26,7 @@ urlpatterns = [
     # url(r'^formfactory/', include("formfactory.urls", namespace="formfactory")),
     url(r"^post/", include("archive.posts.urls", namespace="posts")),
     url(r"^comment/", include("archive.comments.urls", namespace="comments")),
+    url(r"^account/", include("archive.accounts.urls", namespace="accounts")),
 ]
 
 if settings.DEBUG:
