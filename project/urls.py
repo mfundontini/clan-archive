@@ -20,6 +20,8 @@ from django.conf import settings
 
 import object_tools
 
+from archive.posts.views import home
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^object-tools/', include(object_tools.tools.urls)),
@@ -27,6 +29,7 @@ urlpatterns = [
     url(r"^post/", include("archive.posts.urls", namespace="posts")),
     url(r"^comment/", include("archive.comments.urls", namespace="comments")),
     url(r"^account/", include("archive.accounts.urls", namespace="accounts")),
+    url(r"^", home),
 ]
 
 if settings.DEBUG:

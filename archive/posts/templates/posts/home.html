@@ -16,7 +16,7 @@
         <div class="col-sm-6 col-sm-offset-3">
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3">
-                    <h1 class="align-center">
+                    <h1 class="text-center">
                         Izithakazelo ZesiZulu
                     </h1>
                 </div>
@@ -44,13 +44,13 @@
                     <hr>
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3">
-                            <h3><a class="text-center" href="{% url 'posts:detail' post.id %}"><span class="text-center">{{ post.title }}</span></a>{% if post.draft %} -- <span style="color: red;">DRAFT</span>{% endif %}</h3>
+                            <h3 class="text-center"><a class="text-center" href="{% url 'posts:detail' post.id %}"><span class="text-center">{{ post.title }}</span></a>{% if post.draft %} -- <span style="color: red;">DRAFT</span>{% endif %}</h3>
                             <h6 class="text-center">{{ post.created|timesince }} ago</h6>
                         </div>
                     </div>
                     </br>
                         <div class="text-justify" >
-                            <div class="home-post-body" >{{ post.get_marked_content|truncatechars_html:100 }}</div>
+                            <div class="home-post-body" >{{ post.get_marked_content|truncatechars_html:150 }}</div>
                         </div>
                         <p>Author: {% if post.author.get_full_name %} {{ post.author.get_full_name }} {% else %} {{ post.author.username }} {% endif %}</p>
                         <a href="{% url 'posts:update' post.id %}"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="pull-right" href="{% url 'posts:delete' post.id %}"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;Delete</a>
