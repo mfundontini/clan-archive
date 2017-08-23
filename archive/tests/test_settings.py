@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     # apps
     'archive.posts',
     'archive.comments',
+    'archive.accounts',
     # third party apps
     'crispy_forms',
     'pagedown',
