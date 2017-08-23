@@ -14,7 +14,7 @@
                         {% for child in comment.children %}
                         <blockquote>
                             <p>{{child.body}}</p>
-                            <footer>via {{child.user.username}} | {{child.date_added|timesince}} ago <a class="pull-right" href="{% url 'comments:delete' child.id %}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></footer>
+                            <footer>via {{child.user.username}} | {{child.date_added|timesince}} ago {% if request.user == child.user %}<a class="pull-right" href="{% url 'comments:delete' child.id %}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>{% endif %}</footer>
                         </blockquote>
                         {% endfor %}
                     </blockquote>
