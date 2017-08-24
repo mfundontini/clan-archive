@@ -29,7 +29,8 @@ urlpatterns = [
     url(r"^post/", include("archive.posts.urls", namespace="posts")),
     url(r"^comment/", include("archive.comments.urls", namespace="comments")),
     url(r"^account/", include("archive.accounts.urls", namespace="accounts")),
-    url(r"^", home),
+    url(r"^api/post/", include("archive.posts.api.urls", namespace="posts-api")),
+    url(r"^$", home),
 ]
 
 if settings.DEBUG:

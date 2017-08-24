@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'archive.comments',
     'archive.accounts',
     # third party apps
+    'rest_framework',
     'crispy_forms',
     'pagedown',
     'markdown_deux',
@@ -96,6 +97,14 @@ DATABASES = {
         "PORT": "5432"
     }
 }
+
+# REST_FRAMEWORK = {
+#     # Use Django's standard `django.contrib.auth` permissions,
+#     # or allow read-only access for unauthenticated users.
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#     ]
+# }
 
 
 # Password validation
