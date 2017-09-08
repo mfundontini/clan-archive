@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
@@ -18,9 +19,21 @@ from .permissions import IsOwnerOrSuperUser
 
 
 class PostListAPIView(ListAPIView):
-    queryset = Post.objects.all()
     serializer_class = PostListSerializer
     permission_classes = [AllowAny, ]
+
+    # ugly search for test reasons
+    def get_queryset(self):
+        queryset = Post.objects.all()
+        search = self.request.GET.get("q")
+        if search:
+            queryset = Post.objects.all().filter(
+                Q(title__icontains=search) |
+                Q(body__icontains=search) |
+                Q(author__username__icontains=search) |
+                Q(author__first_name__icontains=search)
+            )
+        return queryset
 
 
 class PostDetailAPIView(RetrieveAPIView):
