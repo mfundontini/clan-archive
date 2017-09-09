@@ -30,6 +30,7 @@ urlpatterns = [
     url(r"^comment/", include("archive.comments.urls", namespace="comments")),
     url(r"^account/", include("archive.accounts.urls", namespace="accounts")),
     url(r"^api/post/", include("archive.posts.api.urls", namespace="posts-api")),
+    url(r"^api/comment/", include("archive.comments.api.urls", namespace="comments-api")),
     url(r"^$", home),
 ]
 

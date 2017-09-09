@@ -16,6 +16,12 @@ class CommentManager(models.Manager):
         object_id = instance.id
         return super(CommentManager, self).filter(content_type=content_type, object_id=object_id)
 
+    def filter_parents(self):
+        return super(CommentManager, self).filter(parent__isnull=True)
+
+    def filter_children(self):
+        return super(CommentManager, self).filter(parent__isnull=False)
+
 
 class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
