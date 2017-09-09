@@ -1,6 +1,6 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 
-from .serializers import ListSerializer, ChildSerializer
+from .serializers import ListSerializer, ChildSerializer, DetailSerializer
 from ..models import Comment
 
 
@@ -23,3 +23,10 @@ class ChildrenListAPIView(ListAPIView):
 
     def get_queryset(self):
         return Comment.objects.filter_children()
+
+
+class CommentDetailAPIView(RetrieveAPIView):
+    serializer_class = DetailSerializer
+    queryset = Comment.objects.all()
+    lookup_field = "pk"
+
